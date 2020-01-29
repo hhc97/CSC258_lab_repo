@@ -1,6 +1,6 @@
 module full(LEDR, SW);
-    input [9:0] SW;
-    output [9:0] LEDR;
+    input [9:7] SW;
+    output [1:0] LEDR;
 
     fulladder a0(
         .A(SW[9]),

@@ -1,6 +1,6 @@
 module ripple4adder(LEDR, SW);
-    input [9:0] SW;
-    output [9:0] LEDR;
+    input [8:0] SW;
+    output [4:0] LEDR;
     wire a, b, c;
 
     fulladder a0(

@@ -5,7 +5,7 @@
 
 module mux7to1(LEDR, SW);
     input [9:0] SW;
-    output [9:0] LEDR;
+    output [0:0] LEDR;
 
     reg Out;
 
