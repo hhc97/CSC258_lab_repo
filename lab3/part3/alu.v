@@ -1,23 +1,30 @@
 module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
-	input [7:0] SW; // A -> SW[7:4], B -> SW[3:0]
+	input [8:0] SW; // A -> SW[7:4], B -> SW[3:0]
 	input [2:0] KEY; // function inputs
 	output [7:0] LEDR; // for ALUout
 	output [6:0] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
+    wire [4:0] f0;
 	
 	reg [7:0] ALUout;
 
     assign HEX1 = 7'b0000001;
     assign HEX3 = 7'b0000001;
 
+
+    ripple4adder r0(
+        .bin({1'b0, SW[7:4], 4'b0001}),
+        .led(f0)
+    );
+
     always @(*)
 	begin
 		case(KEY[2:0])
-			0: ALUout = ;
-			1: ALUout = ;
-			2: ALUout = ;
-			3: ALUout = ;
-			4: ALUout = ;
-			5: ALUout = ;
+			0: ALUout = {3'b000, f0};
+			1: ALUout = 8'b00000000;
+			2: ALUout = 8'b00000000;
+			3: ALUout = 8'b00000000;
+			4: ALUout = 8'b00000000;
+			5: ALUout = 8'b00000000;
 			default: ALUout = 8'b00000000;
 		endcase
 	end
@@ -63,41 +70,41 @@ module seven_seg(seg, bin);
 endmodule
 
 
-module ripple4adder(LEDR, SW);
-    input [9:0] SW;
-    output [9:0] LEDR;
+module ripple4adder(led, bin);
+    input [8:0] bin;
+    output [4:0] led;
     wire a, b, c;
 
     fulladder a0(
-        .A(SW[0]),
-        .B(SW[4]),
-        .cin(SW[8]),
+        .A(bin[0]),
+        .B(bin[4]),
+        .cin(bin[8]),
         .cout(a),
-        .S(LEDR[0])
+        .S(led[0])
     );
 
     fulladder a1(
-        .A(SW[1]),
-        .B(SW[5]),
+        .A(bin[1]),
+        .B(bin[5]),
         .cin(a),
         .cout(b),
-        .S(LEDR[1])
+        .S(led[1])
     );
 
     fulladder a2(
-        .A(SW[2]),
-        .B(SW[6]),
+        .A(bin[2]),
+        .B(bin[6]),
         .cin(b),
         .cout(c),
-        .S(LEDR[2])
+        .S(led[2])
     );
 
     fulladder a3(
-        .A(SW[3]),
-        .B(SW[7]),
+        .A(bin[3]),
+        .B(bin[7]),
         .cin(c),
-        .cout(LEDR[4]),
-        .S(LEDR[3])
+        .cout(led[4]),
+        .S(led[3])
     );
 endmodule
 
