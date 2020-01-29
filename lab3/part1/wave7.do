@@ -5,16 +5,17 @@ log {/*}
 add wave {/*}
 
 
-# Expected output: 1
-force {SW[9]} 0
-force {SW[8]} 0
-force {SW[7]} 0
-force {SW[6]} 0
-force {SW[5]} 0
-force {SW[4]} 0
-force {SW[3]} 0
-force {SW[2]} 0
-force {SW[1]} 0
-force {SW[0]} 0
+force {SW[0]} 0 0 ns, 1 10 ns -repeat 20
+force {SW[1]} 0 0 ns, 1 20 ns -repeat 40
+force {SW[2]} 0 0 ns, 1 40 ns -repeat 80
+force {SW[3]} 0 0 ns, 1 80 ns -repeat 160
+force {SW[4]} 0 0 ns, 1 160 ns -repeat 320
+force {SW[5]} 0 0 ns, 1 320 ns -repeat 640
+force {SW[6]} 0 0 ns, 1 640 ns -repeat 1280
 
-run 10ns
+force {SW[7]} 0 0 ns, 1 20 ns -repeat 40
+force {SW[8]} 0 0 ns, 1 40 ns -repeat 80
+force {SW[9]} 0 0 ns, 1 80 ns -repeat 160
+
+
+run 1280ns
