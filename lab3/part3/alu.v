@@ -28,7 +28,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 			0: ALUout = {3'b000, f0};
 			1: ALUout = {3'b000, f1};
 			2: ALUout = SW[7:4] + SW[3:0];
-			3: ALUout = 8'b00000000;
+			3: ALUout = {SW[7:4] | SW[3:0], SW[7:4] ^ SW[3:0]};
 			4: ALUout = 8'b00000000;
 			5: ALUout = 8'b00000000;
 			default: ALUout = 8'b00000000;
