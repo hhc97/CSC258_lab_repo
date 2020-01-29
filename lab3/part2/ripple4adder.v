@@ -37,7 +37,6 @@ module ripple4adder(LEDR, SW);
 endmodule
 
 
-
 module fulladder(A, B, cin, cout, S);
 	input A;
 	input B;
