@@ -1,5 +1,5 @@
 module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
-	input [8:0] SW; // A -> SW[7:4], B -> SW[3:0]
+	input [7:0] SW; // A -> SW[7:4], B -> SW[3:0]
 	input [2:0] KEY; // function inputs
 	output [7:0] LEDR; // for ALUout
 	output [6:0] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
@@ -30,7 +30,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 			2: ALUout = SW[7:4] + SW[3:0];
 			3: ALUout = {SW[7:4] | SW[3:0], SW[7:4] ^ SW[3:0]};
 			4: ALUout = {7'b0000000, SW[7] | SW[6] | SW[5] | SW[4] | SW[3] | SW[2] | SW[1] | SW[0]};
-			5: ALUout = {SW[7:4], SW[3:0]};
+			5: ALUout = SW[7:0];
 			default: ALUout = 8'b00000000;
 		endcase
 	end
@@ -56,13 +56,6 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
         .bin(ALUout[7:4]),
         .seg(HEX5)
     );
-
-
-
-
-
-
-
 endmodule
 
 
@@ -133,7 +126,6 @@ module ripple4adder(led, bin);
         .S(led[3])
     );
 endmodule
-
 
 
 module fulladder(A, B, cin, cout, S);
