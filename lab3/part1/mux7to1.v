@@ -1,8 +1,3 @@
-//SW[6:0] data inputs
-//SW[9:7] select signals
-
-//LEDR[0] output display
-
 module mux7to1(LEDR, SW);
     input [9:0] SW;
     output [0:0] LEDR;
