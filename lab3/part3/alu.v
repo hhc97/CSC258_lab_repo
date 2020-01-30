@@ -2,7 +2,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 	input [7:0] SW; // A -> SW[7:4], B -> SW[3:0]
 	input [2:0] KEY; // function inputs
 	output [7:0] LEDR; // for ALUout
-	output [6:0] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
+	output [0:6] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
     wire [4:0] f0;
     wire [4:0] f1;
 	
