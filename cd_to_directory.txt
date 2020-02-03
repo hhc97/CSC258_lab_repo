@@ -1,1 +1,8 @@
 cd dropbox/utsg/csc258/csc258_lab_repo
+cd dropbox/utsg/csc258/csc258_lab_repo/lab1
+cd dropbox/utsg/csc258/csc258_lab_repo/lab2
+cd dropbox/utsg/csc258/csc258_lab_repo/lab3
+cd dropbox/utsg/csc258/csc258_lab_repo/lab4
+cd dropbox/utsg/csc258/csc258_lab_repo/lab5
+cd dropbox/utsg/csc258/csc258_lab_repo/lab6
+cd dropbox/utsg/csc258/csc258_lab_repo/lab7
