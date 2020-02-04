@@ -56,6 +56,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
     );
 endmodule
 
+
 module eight_bit_register(d, clk, reset_n, q);
 	input [7:0] d;
 	input clk, reset_n;
