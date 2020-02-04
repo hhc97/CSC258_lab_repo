@@ -56,6 +56,21 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
     );
 endmodule
 
+module eight_bit_register(d, clk, reset_n, q);
+	input [7:0] d;
+	input clk, reset_n;
+	output [7:0] q;
+	reg [7:0] q;
+
+	always @(posedge clk)
+	begin
+		if (reset_n == 1'b0)
+			q <= 0;
+		else
+			q <= d;
+	end
+endmodule
+
 
 module seven_seg(seg, bin);
     input [3:0] bin;
