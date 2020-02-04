@@ -70,6 +70,8 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 endmodule
 
 
+// an eight bit register, q will be set to d on posedge of clock if reset_n is low
+// else, q will be set to 0
 module eight_bit_register(d, clk, reset_n, q);
 	input [7:0] d;
 	input clk, reset_n;
