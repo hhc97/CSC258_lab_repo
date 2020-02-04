@@ -46,7 +46,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 		endcase
 	end
 	
-	// assign LEDR = ALUout;
+	assign LEDR = reg_out;
 
     seven_seg h0(
         .bin(SW[3:0]),

@@ -5,127 +5,14 @@ log {/*}
 add wave {/*}
 
 
-#function 0
-#ALUout: 00010000
-force {KEY[2]} 0
-force {KEY[1]} 0
-force {KEY[0]} 0
-#A
-force {SW[7]} 1
-force {SW[6]} 1
-force {SW[5]} 1
-force {SW[4]} 1
-#B
-force {SW[3]} 1
-force {SW[2]} 1
-force {SW[1]} 1
-force {SW[0]} 1
-run 10ns
+#clock
+force {KEY[0]} 0 0, 1 5 -r 10
+#reset
+force {SW[9]} 0 0, 1 10, 0 90, 1 100, 0 180, 1 190
+# fix A values
+force {SW[3: 0]} 2#0000 0, 2#0011 90, 2#0100 180 -r 270
 
+#  functions, 10ns each:
+force {SW[7: 5]} 2#000 00, 2#001 20, 2#010 30, 2#011 40, 2#100 50, 2#101 60, 2#110 70, 2#111 80 -r 90
 
-#function 1
-#ALUout: 00011110
-force {KEY[2]} 0
-force {KEY[1]} 0
-force {KEY[0]} 1
-#A
-force {SW[7]} 1
-force {SW[6]} 1
-force {SW[5]} 1
-force {SW[4]} 1
-#B
-force {SW[3]} 1
-force {SW[2]} 1
-force {SW[1]} 1
-force {SW[0]} 1
-run 10ns
-
-
-#function 2
-#ALUout: 00011110 should be same as above test
-force {KEY[2]} 0
-force {KEY[1]} 1
-force {KEY[0]} 0
-#A
-force {SW[7]} 1
-force {SW[6]} 1
-force {SW[5]} 1
-force {SW[4]} 1
-#B
-force {SW[3]} 1
-force {SW[2]} 1
-force {SW[1]} 1
-force {SW[0]} 1
-run 10ns
-
-
-#function 3
-#ALUout: 11011100
-force {KEY[2]} 0
-force {KEY[1]} 1
-force {KEY[0]} 1
-#A
-force {SW[7]} 0
-force {SW[6]} 1
-force {SW[5]} 0
-force {SW[4]} 1
-#B
-force {SW[3]} 1
-force {SW[2]} 0
-force {SW[1]} 0
-force {SW[0]} 1
-run 10ns
-
-
-#function 4
-#ALUout: 00000001
-force {KEY[2]} 1
-force {KEY[1]} 0
-force {KEY[0]} 0
-#A
-force {SW[7]} 1
-force {SW[6]} 0
-force {SW[5]} 0
-force {SW[4]} 0
-#B
-force {SW[3]} 0
-force {SW[2]} 0
-force {SW[1]} 0
-force {SW[0]} 0
-run 10ns
-
-
-#function 5
-#ALUout: 10101010
-force {KEY[2]} 1
-force {KEY[1]} 0
-force {KEY[0]} 1
-#A
-force {SW[7]} 1
-force {SW[6]} 0
-force {SW[5]} 1
-force {SW[4]} 0
-#B
-force {SW[3]} 1
-force {SW[2]} 0
-force {SW[1]} 1
-force {SW[0]} 0
-run 10ns
-
-
-#function default
-#ALUout: 00000000
-force {KEY[2]} 1
-force {KEY[1]} 1
-force {KEY[0]} 1
-#A
-force {SW[7]} 1
-force {SW[6]} 1
-force {SW[5]} 1
-force {SW[4]} 1
-#B
-force {SW[3]} 1
-force {SW[2]} 1
-force {SW[1]} 1
-force {SW[0]} 1
-run 10ns
+run 250ns
