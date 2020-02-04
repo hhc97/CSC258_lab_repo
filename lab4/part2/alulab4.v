@@ -8,8 +8,9 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 	
 	reg [7:0] ALUout;
 
-    assign HEX1 = 7'b0000001;
-    assign HEX3 = 7'b0000001;
+    assign HEX1 = 7'b1111111;
+    assign HEX2 = 7'b1111111;
+    assign HEX3 = 7'b1111111;
 
 
     ripple4adder r0(
@@ -42,11 +43,6 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
     seven_seg h0(
         .bin(SW[3:0]),
         .seg(HEX0)
-    );
-
-    seven_seg h2(
-        .bin(SW[7:4]),
-        .seg(HEX2)
     );
 
     seven_seg h4(
