@@ -21,22 +21,23 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
         .q(reg_out)
     );
 
-// For function 0, output A + 1 fed into wire f0
+// for function 0, output A + 1 fed into wire f0
     ripple4adder r0(
         .bin({1'b0, SW[3:0], 4'b0001}),
         .led(f0)
     );
 
+// for function 1, output A + B fed to wire f1
     ripple4adder r1(
-        .bin({1'b0, SW[7:0]}),
+        .bin({1'b0, SW[3:0], reg_out[3:0]}),
         .led(f1)
     );
 
     always @(*)
 	begin
 		case(SW[7:5])
-			0: ALUout = {3'b000, f0}; // output is A + 1
-			1: ALUout = {3'b000, f1};
+			0: ALUout = {3'b000, f0}; // output is A + 1 from wire f0
+			1: ALUout = {3'b000, f1}; // output is A + B from wire f1
 			2: ALUout = SW[7:4] + SW[3:0];
 			3: ALUout = {SW[7:4] | SW[3:0], SW[7:4] ^ SW[3:0]};
 			4: ALUout = {7'b0000000, SW[7] | SW[6] | SW[5] | SW[4] | SW[3] | SW[2] | SW[1] | SW[0]};
