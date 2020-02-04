@@ -5,12 +5,20 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 	output [0:6] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
     wire [4:0] f0;
     wire [4:0] f1;
+    wire [7:0] reg_out;
 	
 	reg [7:0] ALUout;
 
     assign HEX1 = 7'b1111111;
     assign HEX2 = 7'b1111111;
     assign HEX3 = 7'b1111111;
+
+    eight_bit_register reg0(
+        .d(ALUout),
+        .clk(KEY[0]),
+        .reset_n(SW[9]),
+        .q(reg_out)
+    );
 
 
     ripple4adder r0(
@@ -38,7 +46,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 		endcase
 	end
 	
-	assign LEDR = ALUout;
+	// assign LEDR = ALUout;
 
     seven_seg h0(
         .bin(SW[3:0]),
