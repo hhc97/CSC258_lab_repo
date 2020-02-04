@@ -50,18 +50,21 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 	
 	assign LEDR = reg_out;
 
+// display value of A on hex0
     seven_seg h0(
         .bin(SW[3:0]),
         .seg(HEX0)
     );
 
+// display least significant 4 bits of reg_out
     seven_seg h4(
-        .bin(ALUout[3:0]),
+        .bin(reg_out[3:0]),
         .seg(HEX4)
     );
 
+// display most significant 4 bits of reg_out
     seven_seg h5(
-        .bin(ALUout[7:4]),
+        .bin(reg_out[7:4]),
         .seg(HEX5)
     );
 endmodule
