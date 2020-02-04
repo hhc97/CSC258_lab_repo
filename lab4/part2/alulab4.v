@@ -39,7 +39,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 			0: ALUout = {3'b000, f0}; // output is A + 1 from wire f0
 			1: ALUout = {3'b000, f1}; // output is A + B from wire f1
 			2: ALUout = SW[3:0] + reg_out[3:0]; // output is A + B using verilog '+' operator
-			3: ALUout = {SW[7:4] | SW[3:0], SW[7:4] ^ SW[3:0]};
+			3: ALUout = {SW[3:0] | reg_out[3:0], SW[3:0] ^ reg_out[3:0]}; // A OR B, A XOR B
 			4: ALUout = {7'b0000000, SW[7] | SW[6] | SW[5] | SW[4] | SW[3] | SW[2] | SW[1] | SW[0]};
 			5: ALUout = SW[7:0];
             6: ALUout = 8'b00000000;
