@@ -13,6 +13,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
     assign HEX2 = 7'b1111111;
     assign HEX3 = 7'b1111111;
 
+// The output reg_out[3:0] is input B
     eight_bit_register reg0(
         .d(ALUout),
         .clk(KEY[0]),
@@ -20,9 +21,9 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
         .q(reg_out)
     );
 
-
+// For function 0, output A + 1 fed into wire f0
     ripple4adder r0(
-        .bin({1'b0, SW[7:4], 4'b0001}),
+        .bin({1'b0, SW[3:0], 4'b0001}),
         .led(f0)
     );
 
@@ -34,7 +35,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
     always @(*)
 	begin
 		case(SW[7:5])
-			0: ALUout = {3'b000, f0};
+			0: ALUout = {3'b000, f0}; // output is A + 1
 			1: ALUout = {3'b000, f1};
 			2: ALUout = SW[7:4] + SW[3:0];
 			3: ALUout = {SW[7:4] | SW[3:0], SW[7:4] ^ SW[3:0]};
