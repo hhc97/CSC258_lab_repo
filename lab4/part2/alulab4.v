@@ -43,7 +43,7 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 			4: ALUout = {7'b0000000, reg_out[3] | reg_out[2] | reg_out[1] | reg_out[0] | SW[3] | SW[2] | SW[1] | SW[0]};
 			5: ALUout = reg_out[3:0] << SW[3:0]; // left shift B by A bits
             6: ALUout = reg_out[3:0] >> SW[3:0]; // right shift B by A bits
-            7: ALUout = 8'b00000000;
+            7: ALUout = SW[3:0] * reg_out[3:0]; // A x B using verilog '*' operator
 			default: ALUout = 8'b00000000;
 		endcase
 	end
