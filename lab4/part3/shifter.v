@@ -1,3 +1,28 @@
+module eight_bit_shifter(LoadVal, Load_n, ShiftRight, ASR, clk, reset_n, Q);
+    input [7:0] LoadVal;
+    input Load_n, ShiftRight, ASR, clk, reset_n;
+    output [7:0] Q;
+
+endmodule // eight_bit_shifter
+
+
+module arithmetic_shift_copier(orig, copy, out);
+    input orig, copy;
+    output out;
+
+    reg out;
+
+    always @(*)
+    begin
+        if (copy == 1'b1)
+            out <= orig;
+        else
+            out <= 0;
+    end
+
+endmodule // arithmetic_shift_copier
+
+
 module shiftbit(load_val, load_n, clk, reset_n, shift, in, out);
     input load_val, load_n, clk, reset_n, shift, in;
     output out;
@@ -27,16 +52,16 @@ module shiftbit(load_val, load_n, clk, reset_n, shift, in, out);
 endmodule // shiftbit
 
 
-module d_flipflop(d, clk, reset, q);
-    input d, clk, reset;
+module d_flipflop(d, clk, reset_n, q);
+    input d, clk, reset_n;
     output q;
 
     reg q;
 
-// set q to d at positive edge of clock if reset is high, else set q to 0
+// set q to d at positive edge of clock if reset_n is high, else set q to 0
     always @(posedge clk)
     begin
-        if (reset == 1'b0)
+        if (reset_n == 1'b0)
             q <= 0;
         else
             q <= d;
