@@ -18,9 +18,10 @@ force {SW[7:0]} 10101010 0, 01010101 200
 # load switch values into flipflops every 100 ns
 force {KEY[1]} 0 0, 1 20 -r 100
 
-# KEY[2] = ShiftRight;
-force {KEY[2]} 0 0, 1 20 -r 100
-# KEY[3] = ASR
+# start shifting at 30ns each interval
+force {KEY[2]} 0 0, 1 30 -r 100
+
+# test ASR every other interval
 force {KEY[3]} 0 0, 1 100 -r 200
 
 run 400ns
