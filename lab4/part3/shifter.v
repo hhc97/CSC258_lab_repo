@@ -1,8 +1,28 @@
 module shiftbit(load_val, load_n, clk, reset_n, shift, in, out);
     input load_val, load_n, clk, reset_n, shift, in;
     output out;
-    
+    wire shift_out, load_out;
 
+    mux2to1 shift_select(
+        .x(out),
+        .y(in),
+        .s(shift),
+        .m(shift_out)
+    );
+
+    mux2to1 load_select(
+        .x(load_val),
+        .y(shift_out),
+        .s(load_n),
+        .m(load_out)
+    );
+
+    d_flipflop store(
+        .d(load_out),
+        .clk(clk),
+        .reset(reset_n),
+        .q(out)
+    );
 
 endmodule // shiftbit
 
