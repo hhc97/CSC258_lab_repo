@@ -1,3 +1,21 @@
+module shifter(SW, KEY, LEDR);
+    input [9:0] SW; // LoadVal inputs -> SW[7:0], reset_n -> SW[9]
+    input [3:0] KEY; // ASR -> KEY[3], ShiftRight -> KEY[2], Load_n -> KEY[1], clk -> KEY[0]
+    output [7:0] LEDR; // output to LEDR[7:0]
+
+    eight_bit_shifter main(
+        .LoadVal(SW[7:0]),
+        .Load_n(KEY[1]),
+        .ShiftRight(KEY[2]),
+        .ASR(KEY[3]),
+        .clk(KEY[0]),
+        .reset_n(SW[9]),
+        .Q(LEDR[7:0])
+    );
+
+endmodule // shifter
+
+
 module eight_bit_shifter(LoadVal, Load_n, ShiftRight, ASR, clk, reset_n, Q);
     input [7:0] LoadVal;
     input Load_n, ShiftRight, ASR, clk, reset_n;
@@ -132,7 +150,7 @@ module shiftbit(load_val, load_n, clk, reset_n, shift, in, out);
     d_flipflop store(
         .d(load_out),
         .clk(clk),
-        .reset(reset_n),
+        .reset_n(reset_n),
         .q(out)
     );
 
