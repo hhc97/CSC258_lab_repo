@@ -13,10 +13,11 @@ force {SW[9]} 0 0, 1 10 -r 100
 
 
 # set switches
-force {SW[7: 0]} 10101010 0, 01010101 200
+force {SW[7:0]} 10101010 0, 01010101 200
 
-# KEY[1] = Load_n;
-force {KEY[1]} 0 10, 1 20, 0 110, 1 120
+# load switch values into flipflops every 100 ns
+force {KEY[1]} 0 0, 1 20 -r 100
+
 # KEY[2] = ShiftRight;
 force {KEY[2]} 0 0, 1 20 -r 100
 # KEY[3] = ASR
