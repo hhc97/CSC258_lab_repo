@@ -2,6 +2,93 @@ module eight_bit_shifter(LoadVal, Load_n, ShiftRight, ASR, clk, reset_n, Q);
     input [7:0] LoadVal;
     input Load_n, ShiftRight, ASR, clk, reset_n;
     output [7:0] Q;
+    wire f1;
+
+    arithmetic_shift_copier first_bit(
+        .orig(LoadVal[7]),
+        .copy(ASR),
+        .out(f1)
+    );
+
+    shiftbit s7(
+        .load_val(LoadVal[7]),
+        .load_n(Load_n),
+        .clk(clk),
+        .reset_n(reset_n),
+        .shift(ShiftRight),
+        .in(f1),
+        .out(Q[7])
+    );
+
+    shiftbit s6(
+        .load_val(LoadVal[6]),
+        .load_n(Load_n),
+        .clk(clk),
+        .reset_n(reset_n),
+        .shift(ShiftRight),
+        .in(Q[7]),
+        .out(Q[6])
+    );
+
+    shiftbit s5(
+        .load_val(LoadVal[5]),
+        .load_n(Load_n),
+        .clk(clk),
+        .reset_n(reset_n),
+        .shift(ShiftRight),
+        .in(Q[6]),
+        .out(Q[5])
+    );
+
+    shiftbit s4(
+        .load_val(LoadVal[4]),
+        .load_n(Load_n),
+        .clk(clk),
+        .reset_n(reset_n),
+        .shift(ShiftRight),
+        .in(Q[5]),
+        .out(Q[4])
+    );
+
+    shiftbit s3(
+        .load_val(LoadVal[3]),
+        .load_n(Load_n),
+        .clk(clk),
+        .reset_n(reset_n),
+        .shift(ShiftRight),
+        .in(Q[4]),
+        .out(Q[3])
+    );
+
+    shiftbit s2(
+        .load_val(LoadVal[2]),
+        .load_n(Load_n),
+        .clk(clk),
+        .reset_n(reset_n),
+        .shift(ShiftRight),
+        .in(Q[3]),
+        .out(Q[2])
+    );
+
+    shiftbit s1(
+        .load_val(LoadVal[1]),
+        .load_n(Load_n),
+        .clk(clk),
+        .reset_n(reset_n),
+        .shift(ShiftRight),
+        .in(Q[2]),
+        .out(Q[1])
+    );
+
+    shiftbit s0(
+        .load_val(LoadVal[0]),
+        .load_n(Load_n),
+        .clk(clk),
+        .reset_n(reset_n),
+        .shift(ShiftRight),
+        .in(Q[1]),
+        .out(Q[0])
+    );
 
 endmodule // eight_bit_shifter
 
