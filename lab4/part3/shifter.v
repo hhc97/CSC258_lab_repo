@@ -23,7 +23,7 @@ module eight_bit_shifter(LoadVal, Load_n, ShiftRight, ASR, clk, reset_n, Q);
     wire f1;
 
     arithmetic_shift_copier first_bit(
-        .orig(LoadVal[7]),
+        .orig(Q[7]),
         .copy(ASR),
         .out(f1)
     );
