@@ -1,3 +1,24 @@
+module displaycounter(enable, clk, reset_n, out);
+    input enable, clk, reset_n;
+    output [3:0] out;
+
+    reg [3:0] out;
+
+    always @(posedge clk, negedge reset_n)
+    begin
+        if (reset_n == 1'b0)
+            out <= 0;
+        else if (enable == 1'b1)
+            begin
+                if (out == 4'b1111)
+                    out <= 0;
+                else
+                    out <= out + 1'b1;
+            end
+    end
+endmodule // displaycounter
+
+
 module ratedivider(enable, load, clk, reset_n, out);
     input enable, clk, reset_n;
     input [27:0] load; // to store numbers up to 200M for 0.25Hz
