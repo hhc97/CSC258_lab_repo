@@ -1,3 +1,17 @@
+module ratecounter(SW, HEX0, CLOCK_50);
+    input CLOCK_50;
+    input [2:0] SW; // reset -> SW[2], frequency select -> SW[1:0]
+    output [0:6] HEX0;
+
+    wire [3:0] hex_in;
+
+    counter thing(SW[2], SW[1:0], CLOCK_50, hex_in);
+
+    seven_seg h0(HEX0, hex_in);
+
+endmodule // ratecounter
+
+
 module counter(reset_n, frequency, clk, out);
     input reset_n, clk;
     input [1:0] frequency;
@@ -7,13 +21,9 @@ module counter(reset_n, frequency, clk, out);
 
     reg count_up;
 
-    // ratedivider rate_one(1'b1, 28'd49999999, clk, reset_n, one);
-    // ratedivider rate_half(1'b1, 28'd99999999, clk, reset_n, half);
-    // ratedivider rate_quarter(1'b1, 28'd199999999, clk, reset_n, quarter);
-    
-    ratedivider rate_one(1'b1, 28'd49, clk, reset_n, one);
-    ratedivider rate_half(1'b1, 28'd99, clk, reset_n, half);
-    ratedivider rate_quarter(1'b1, 28'd199, clk, reset_n, quarter);
+    ratedivider rate_one(1'b1, 28'd49999999, clk, reset_n, one);
+    ratedivider rate_half(1'b1, 28'd99999999, clk, reset_n, half);
+    ratedivider rate_quarter(1'b1, 28'd199999999, clk, reset_n, quarter);
 
     always @(*)
         begin
