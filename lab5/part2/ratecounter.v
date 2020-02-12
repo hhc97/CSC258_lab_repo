@@ -1,3 +1,35 @@
+module counter(reset_n, frequency, clk, out);
+    input reset_n, clk;
+    input [1:0] frequency;
+    output [3:0] out;
+
+    wire [27:0] one, half, quarter;
+
+    reg count_up;
+
+    // ratedivider rate_one(1'b1, 28'd49999999, clk, reset_n, one);
+    // ratedivider rate_half(1'b1, 28'd99999999, clk, reset_n, half);
+    // ratedivider rate_quarter(1'b1, 28'd199999999, clk, reset_n, quarter);
+    
+    ratedivider rate_one(1'b1, 28'd49, clk, reset_n, one);
+    ratedivider rate_half(1'b1, 28'd99, clk, reset_n, half);
+    ratedivider rate_quarter(1'b1, 28'd199, clk, reset_n, quarter);
+
+    always @(*)
+        begin
+            case (frequency)
+                0 : count_up = 1'b1;
+                1 : count_up = (one == 0) ? 1 : 0;
+                2 : count_up = (half == 0) ? 1 : 0;
+                3 : count_up = (quarter == 0) ? 1 : 0;
+                default : count_up = 1'b1;
+            endcase
+        end
+    
+    displaycounter disp(count_up, clk, reset_n, out);
+endmodule // counter
+
+
 module displaycounter(enable, clk, reset_n, out);
     input enable, clk, reset_n;
     output [3:0] out;
