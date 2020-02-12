@@ -1,3 +1,13 @@
+module morseout(SW, KEY, LEDR, CLOCK_50);
+    input [2:0] SW;
+    input [1:0] KEY;
+    input CLOCK_50;
+    output [0:0] LEDR;
+
+    morse morse_encoder(SW[2:0], KEY[1], CLOCK_50, KEY[0], LEDR[0]);
+endmodule // morseout
+
+
 module morse(selection, load_n, clk, reset_n, led_out);
     input [2:0] selection;
     input load_n, clk, reset_n;
@@ -9,8 +19,7 @@ module morse(selection, load_n, clk, reset_n, led_out);
 
     lut values(selection, morse_codes);
 
-    // ratedivider timer(1'b1, 25'd24999999, clk, reset_n, count_val);
-    ratedivider timer(1'b1, 25'd5, clk, reset_n, count_val);
+    ratedivider timer(1'b1, 25'd24999999, clk, reset_n, count_val);\
 
     assign blink_signal = (count_val == 0) ? 1 : 0;
 
