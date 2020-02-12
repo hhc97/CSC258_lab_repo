@@ -1,3 +1,31 @@
+module shifter(load_vals, load_n, reset_n, clk, out);
+    input load_n, reset_n, clk;
+    input [13:0] load_vals;
+    output reg out;
+
+    reg [13:0] q;
+
+    always @(posedge clk, negedge reset_n)
+    begin
+        if (reset_n == 0)
+            begin
+                out <= 0;
+                q <= 0;
+            end
+        else if (load_n == 0)
+            begin
+                out <= 0;
+                q <= load_vals;
+            end
+        else if (clk == 1)
+            begin
+                out <= q[0];
+                q <= q >> 1'b1;
+            end
+    end
+endmodule // shifter
+
+
 module lut(key, out);
     input [2:0] key;
     output [0:13] out;
