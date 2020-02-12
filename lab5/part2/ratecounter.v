@@ -82,7 +82,6 @@ module ratedivider(enable, load, clk, reset_n, out);
 endmodule // ratedivider
 
 
-
 module seven_seg(seg, bin);
     input [3:0] bin;
     output [0:6] seg;

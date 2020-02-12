@@ -2,7 +2,7 @@ module counter(KEY, SW, HEX0, HEX1);
     input [0:0] KEY;
     input [1:0] SW;
     output [0:6] HEX0, HEX1;
-    
+
     wire [3:0] disp0, disp1;
 
     counter_eight_bit c8(SW[1], KEY[0], SW[0], {disp1, disp0});
