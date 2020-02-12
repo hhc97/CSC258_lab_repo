@@ -25,7 +25,7 @@ module ratedivider(enable, load, clk, reset_n, out);
     input enable, clk, reset_n;
     input [24:0] load; // to store numbers up to 25M for 2Hz
 
-    output reg [27:0] out;
+    output reg [24:0] out;
 
     always @(posedge clk)
     begin
