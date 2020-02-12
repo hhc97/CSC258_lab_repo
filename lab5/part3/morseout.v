@@ -1,3 +1,24 @@
+module morse(selection, load_n, clk, reset_n, led_out);
+    input [2:0] selection;
+    input load_n, clk, reset_n;
+    output led_out;
+
+    wire [13:0] morse_codes;
+    wire [24:0] count_val;
+    wire blink_signal;
+
+    lut values(selection, morse_codes);
+
+    // ratedivider timer(1'b1, 25'd24999999, clk, reset_n, count_val);
+    ratedivider timer(1'b1, 25'd5, clk, reset_n, count_val);
+
+    assign blink_signal = (count_val == 0) ? 1 : 0;
+
+    shifter disp(morse_codes, load_n, reset_n, blink_signal, led_out);
+
+endmodule // morse
+
+
 module shifter(load_vals, load_n, reset_n, clk, out);
     input load_n, reset_n, clk;
     input [13:0] load_vals;
@@ -5,7 +26,7 @@ module shifter(load_vals, load_n, reset_n, clk, out);
 
     reg [13:0] q;
 
-    always @(posedge clk, negedge reset_n)
+    always @(posedge clk, negedge reset_n, negedge load_n)
     begin
         if (reset_n == 0)
             begin
@@ -19,8 +40,8 @@ module shifter(load_vals, load_n, reset_n, clk, out);
             end
         else if (clk == 1)
             begin
-                out <= q[0];
-                q <= q >> 1'b1;
+                out <= q[13];
+                q <= q << 1'b1;
             end
     end
 endmodule // shifter
@@ -28,9 +49,7 @@ endmodule // shifter
 
 module lut(key, out);
     input [2:0] key;
-    output [0:13] out;
-
-    reg [0:13] out;
+    output reg [13:0] out;
 
     always @(*)
     begin
@@ -58,7 +77,7 @@ module ratedivider(enable, load, clk, reset_n, out);
     always @(posedge clk)
     begin
         if (reset_n == 1'b0)
-            out <= 0;
+            out <= load;
         else if (enable == 1'b1)
             begin
                 if (out == 0)
