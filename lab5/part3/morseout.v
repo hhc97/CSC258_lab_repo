@@ -19,7 +19,7 @@ module morse(selection, load_n, clk, reset_n, led_out);
 
     lut values(selection, morse_codes);
 
-    ratedivider timer(1'b1, 25'd24999999, clk, reset_n, count_val);\
+    ratedivider timer(1'b1, 25'd24999999, clk, reset_n, count_val);
 
     assign blink_signal = (count_val == 0) ? 1 : 0;
 
