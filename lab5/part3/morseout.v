@@ -14,12 +14,12 @@ module morse(selection, load_n, clk, reset_n, led_out);
     output led_out;
 
     wire [13:0] morse_codes;
-    wire [24:0] count_val;
+    wire [25:0] count_val;
     wire blink_signal;
 
     lut values(selection, morse_codes);
 
-    ratedivider timer(1'b1, 25'd24999999, clk, reset_n, count_val);
+    ratedivider timer(1'b1, 26'd49999999, clk, reset_n, count_val);
 
     assign blink_signal = (count_val == 0) ? 1 : 0;
 
@@ -79,9 +79,9 @@ endmodule // lut
 
 module ratedivider(enable, load, clk, reset_n, out);
     input enable, clk, reset_n;
-    input [24:0] load; // to store numbers up to 25M for 2Hz
+    input [25:0] load; // to store numbers up to 25M for 2Hz
 
-    output reg [24:0] out;
+    output reg [25:0] out;
 
     always @(posedge clk)
     begin
