@@ -159,31 +159,50 @@ module control(
         alu_select_b = 2'b00;
         alu_op       = 1'b0;
 
+        // we will load in the order C -> B -> A
         case (current_state)
             S_LOAD_A: begin
-                ld_a = 1'b1;
+                ld_c = 1'b1;
                 end
             S_LOAD_B: begin
                 ld_b = 1'b1;
                 end
             S_LOAD_C: begin
-                ld_c = 1'b1;
+                ld_a = 1'b1;
                 end
             S_LOAD_X: begin
                 ld_x = 1'b1;
                 end
-            S_CYCLE_0: begin // Do A <- A * A 
-                ld_alu_out = 1'b1; ld_a = 1'b1; // store result back into A
-                alu_select_a = 2'b00; // Select register A
-                alu_select_b = 2'b00; // Also select register A
-                alu_op = 1'b1; // Do multiply operation
+            S_CYCLE_0: begin // A <- A * x
+                ld_alu_out = 1'b1; ld_a = 1'b1; // store in A
+                alu_select_a = 2'b00; // select A
+                alu_select_b = 2'b11; // select x
+                alu_op = 1'b1; // multiply
             end
-            S_CYCLE_1: begin
-                ld_r = 1'b1; // store result in result register
-                alu_select_a = 2'b00; // Select register A
-                alu_select_b = 2'b10; // Select register C
-                alu_op = 1'b0; // Do Add operation
+            S_CYCLE_1: begin // A <- Ax * x
+                ld_alu_out = 1'b1; ld_a = 1'b1; // store in A
+                alu_select_a = 2'b00; // select A
+                alu_select_b = 2'b11; // select x
+                alu_op = 1'b1; // multiply
             end
+			S_CYCLE_2: begin // B <- B * x
+				 ld_alu_out = 1'b1; ld_b = 1'b1; // store in B
+				 alu_select_a = 2'b01; // select B
+				 alu_select_b = 2'b11; // select x
+				 alu_op = 1'b1; // multiply
+			end
+			S_CYCLE_3: begin // A <- Axx + Bx
+				 ld_alu_out = 1'b1; ld_a = 1'b1; //store in A
+				 alu_select_a = 2'b00; // select A
+				 alu_select_b = 2'b01; // select B
+				 alu_op = 1'b0; // add
+			end
+			S_CYCLE_4: begin // store final result in reg
+				 ld_r = 1'b1;
+				 alu_select_a = 2'b00; // select A
+				 alu_select_b = 2'b10; // select C
+				 alu_op = 1'b0; // add
+			end
         endcase
     end // enable_signals
    
