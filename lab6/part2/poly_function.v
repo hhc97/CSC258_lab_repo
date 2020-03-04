@@ -120,8 +120,8 @@ module control(
                 S_CYCLE_0       = 4'd8,
                 S_CYCLE_1       = 4'd9,
                 S_CYCLE_2       = 4'd10,
-                S_CYCLE_3		= 4'd11,
-                S_CYCLE_4		= 4'd12;
+                S_CYCLE_3       = 4'd11,
+                S_CYCLE_4       = 4'd12;
     
     // Next state logic aka our state table
     always@(*)
