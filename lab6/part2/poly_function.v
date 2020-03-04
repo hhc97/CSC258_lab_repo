@@ -137,9 +137,9 @@ module control(
                 S_LOAD_X_WAIT: next_state = go ? S_LOAD_X_WAIT : S_CYCLE_0; // Loop in current state until go signal goes low
                 S_CYCLE_0: next_state = S_CYCLE_1;  // C <- C * x
                 S_CYCLE_1: next_state = S_CYCLE_2;  // C <- Cx * x
-				S_CYCLE_2: next_state = S_CYCLE_3;  // B <- B * x
-				S_CYCLE_3: next_state = S_CYCLE_4;  // Cxx + Bx
-				S_CYCLE_4: next_state = S_LOAD_A;  // Cxx + Bx + A
+                S_CYCLE_2: next_state = S_CYCLE_3;  // B <- B * x
+                S_CYCLE_3: next_state = S_CYCLE_4;  // Cxx + Bx
+                S_CYCLE_4: next_state = S_LOAD_A;  // Cxx + Bx + A
             default: next_state = S_LOAD_A;
         endcase
     end // state_table
