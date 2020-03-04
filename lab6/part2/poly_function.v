@@ -185,23 +185,23 @@ module control(
                 alu_select_b = 2'b11; // select x
                 alu_op = 1'b1; // multiply
             end
-			S_CYCLE_2: begin // B <- B * x
-				 ld_alu_out = 1'b1; ld_b = 1'b1; // store in B
-				 alu_select_a = 2'b01; // select B
-				 alu_select_b = 2'b11; // select x
-				 alu_op = 1'b1; // multiply
+            S_CYCLE_2: begin // B <- B * x
+                ld_alu_out = 1'b1; ld_b = 1'b1; // store in B
+                alu_select_a = 2'b01; // select B
+                alu_select_b = 2'b11; // select x
+                alu_op = 1'b1; // multiply
 			end
-			S_CYCLE_3: begin // A <- Axx + Bx
-				 ld_alu_out = 1'b1; ld_a = 1'b1; //store in A
-				 alu_select_a = 2'b00; // select A
-				 alu_select_b = 2'b01; // select B
-				 alu_op = 1'b0; // add
+            S_CYCLE_3: begin // A <- Axx + Bx
+                ld_alu_out = 1'b1; ld_a = 1'b1; //store in A
+                alu_select_a = 2'b00; // select A
+                alu_select_b = 2'b01; // select B
+                alu_op = 1'b0; // add
 			end
-			S_CYCLE_4: begin // store final result in reg
-				 ld_r = 1'b1;
-				 alu_select_a = 2'b00; // select A
-				 alu_select_b = 2'b10; // select C
-				 alu_op = 1'b0; // add
+            S_CYCLE_4: begin // store final result in reg
+                ld_r = 1'b1;
+                alu_select_a = 2'b00; // select A
+                alu_select_b = 2'b10; // select C
+                alu_op = 1'b0; // add
 			end
         endcase
     end // enable_signals
