@@ -7,10 +7,10 @@
 //HEX0 & HEX1 also displays result
 
 module fpga_top(SW, KEY, CLOCK_50, LEDR, HEX0, HEX1);
-    input [9:0] SW;
-    input [3:0] KEY;
+    input [7:0] SW;
+    input [1:0] KEY;
     input CLOCK_50;
-    output [9:0] LEDR;
+    output [7:0] LEDR;
     output [6:0] HEX0, HEX1;
 
     wire resetn;
@@ -28,7 +28,7 @@ module fpga_top(SW, KEY, CLOCK_50, LEDR, HEX0, HEX1);
         .data_result(data_result)
     );
       
-    assign LEDR[9:0] = {2'b00, data_result};
+    assign LEDR[7:0] = data_result;
 
     hex_decoder H0(
         .hex_digit(data_result[3:0]), 
@@ -93,7 +93,7 @@ module part2(
         .data_result(data_result)
     );
                 
- endmodule        
+endmodule
                 
 
 module control(
