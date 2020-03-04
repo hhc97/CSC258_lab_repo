@@ -119,7 +119,9 @@ module control(
                 S_LOAD_X_WAIT   = 4'd7,
                 S_CYCLE_0       = 4'd8,
                 S_CYCLE_1       = 4'd9,
-                S_CYCLE_2       = 4'd10;
+                S_CYCLE_2       = 4'd10,
+				S_CYCLE_3		= 4'd11,
+				S_CYCLE_4		= 4'd12;
     
     // Next state logic aka our state table
     always@(*)
@@ -133,9 +135,12 @@ module control(
                 S_LOAD_C_WAIT: next_state = go ? S_LOAD_C_WAIT : S_LOAD_X; // Loop in current state until go signal goes low
                 S_LOAD_X: next_state = go ? S_LOAD_X_WAIT : S_LOAD_X; // Loop in current state until value is input
                 S_LOAD_X_WAIT: next_state = go ? S_LOAD_X_WAIT : S_CYCLE_0; // Loop in current state until go signal goes low
-                S_CYCLE_0: next_state = S_CYCLE_1;
-                S_CYCLE_1: next_state = S_LOAD_A; // we will be done our two operations, start over after
-            default:     next_state = S_LOAD_A;
+                S_CYCLE_0: next_state = S_CYCLE_1;  // C <- C * x
+                S_CYCLE_1: next_state = S_CYCLE_2;  // C <- Cx * x
+				S_CYCLE_2: next_state = S_CYCLE_3;  // B <- B * x
+				S_CYCLE_3: next_state = S_CYCLE_4;  // Cxx + Bx
+				S_CYCLE_4: next_state = S_LOAD_A;  // Cxx + Bx + A
+            default: next_state = S_LOAD_A;
         endcase
     end // state_table
    
@@ -179,7 +184,6 @@ module control(
                 alu_select_b = 2'b10; // Select register C
                 alu_op = 1'b0; // Do Add operation
             end
-        // default:    // don't need default since we already made sure all of our outputs were assigned a value at the start of the always block
         endcase
     end // enable_signals
    
