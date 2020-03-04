@@ -7,8 +7,8 @@
 // LEDR[9]:     output (z)
 
 module sequence_detector(SW, KEY, LEDR);
-    input [9:0] SW;
-    input [3:0] KEY;
+    input [1:0] SW;
+    input [0:0] KEY;
     output [9:0] LEDR;
 
     wire w, clock, resetn, z;
