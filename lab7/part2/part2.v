@@ -79,13 +79,13 @@ endmodule
 
 
 module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y, Colour);
-	input 			reset_n, enable, clock, ld_x, ld_y, ld_c;
-	input 	[6:0] 	data_in;
-	input 	[2:0] 	colour;
-	output 	[6:0] 	X;
-	output 	[6:0] 	Y;
-	output 	[2:0]	Colour;
-	reg 	[6:0] 	x1,y1,co1;
+	input reset_n, enable, clock, ld_x, ld_y, ld_c;
+	input [6:0] data_in;
+	input [2:0] colour;
+	output [6:0] X;
+	output [6:0] Y;
+	output [2:0] Colour;
+	reg [6:0] x1, y1, co1;
 	
 	wire [1:0] c1, c2, c3;
 	
