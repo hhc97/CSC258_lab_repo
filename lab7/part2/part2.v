@@ -193,18 +193,18 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
 	S_LOAD_Y_WAIT = 4'd3,
 	S_CYCLE_0 = 4'd4;
 
-	rate_counter1 m1(clock,reset_n,1'b1,q);
+	rate_counter1 m1(clock, reset_n, 1'b1, q);
 	assign clock_1 = (q == 5'b00000) ? 1 : 0;
 	
 	always@(*)
 	begin: state_table
 		case (current_state)
-			S_LOAD_X:	  next_state = go ? S_LOAD_X_WAIT : S_LOAD_X;
-			S_LOAD_X_WAIT: next_state = go ? S_LOAD_X_WAIT : S_LOAD_Y;
-			S_LOAD_Y:	  next_state = KEY ? S_LOAD_Y_WAIT : S_LOAD_Y;
-			S_LOAD_Y_WAIT: next_state = KEY ? S_LOAD_Y_WAIT : S_CYCLE_0;
-			S_CYCLE_0:	 next_state = S_LOAD_X;
-			default:	   next_state = S_LOAD_X;
+			S_LOAD_X:		next_state = go ? S_LOAD_X_WAIT : S_LOAD_X;
+			S_LOAD_X_WAIT:	next_state = go ? S_LOAD_X_WAIT : S_LOAD_Y;
+			S_LOAD_Y:		next_state = KEY ? S_LOAD_Y_WAIT : S_LOAD_Y;
+			S_LOAD_Y_WAIT:	next_state = KEY ? S_LOAD_Y_WAIT : S_CYCLE_0;
+			S_CYCLE_0:		next_state = S_LOAD_X;
+			default:		next_state = S_LOAD_X;
 		endcase
 	end
 		
