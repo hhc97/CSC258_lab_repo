@@ -187,11 +187,11 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
 	wire clock_1;
 
 	localparam
-	S_LOAD_X	  = 4'd0,
+	S_LOAD_X = 4'd0,
 	S_LOAD_X_WAIT = 4'd1,
-	S_LOAD_Y	  = 4'd2,
+	S_LOAD_Y = 4'd2,
 	S_LOAD_Y_WAIT = 4'd3,
-	S_CYCLE_0	 = 4'd4;
+	S_CYCLE_0 = 4'd4;
 
 	rate_counter1 m1(clock,reset_n,1'b1,q);
 	assign clock_1 = (q == 5'b00000) ? 1 : 0;
