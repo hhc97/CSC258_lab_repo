@@ -82,10 +82,12 @@ module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y,
 	input reset_n, enable, clock, ld_x, ld_y, ld_c;
 	input [6:0] data_in;
 	input [2:0] colour;
-	output [6:0] X;
+	output [7:0] X;
 	output [6:0] Y;
 	output [2:0] Colour;
-	reg [6:0] x1, y1, co1;
+	reg [7:0] x1;
+	reg [6:0] y1;
+	reg [2:0] co1;
 	
 	wire [1:0] c1, c2, c3;
 	
@@ -246,7 +248,8 @@ module combination(data_in, colour, reset_n, clock, go, KEY, X, Y, Colour);
 	input [6:0] data_in;
 	input [2:0] colour;
 	input reset_n, clock, go, KEY;
-	output[6:0] X, Y;
+	output [7:0] X;
+	output [6:0] Y;
 	output[2:0] Colour;
 	
 	wire enable, ld_x, ld_y, ld_c, plot;
