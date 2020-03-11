@@ -92,9 +92,9 @@ module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y,
 	always @ (posedge clock)
 	begin
 		if (!reset_n) begin
-		x1 <= 8'b0; 
-		y1 <= 7'b0;
-		co1 <= 3'b0;
+			x1 <= 8'b0; 
+			y1 <= 7'b0;
+			co1 <= 3'b0;
 		end
 		else begin
 		if (ld_x)
