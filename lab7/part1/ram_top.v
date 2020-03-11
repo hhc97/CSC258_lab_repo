@@ -1,4 +1,18 @@
+module ram_top(SW, KEY, HEX0, HEX2, HEX4, HEX5);
+    input [9:0] SW;
+    input [0:0] KEY;
+    output [0:6] HEX0, HEX2, HEX4, HEX5;
 
+    wire [3:0] d_out;
+
+    ram32x4 ram(SW[8:4], KEY[0], SW[3:0], SW[9], d_out);
+
+    seven_seg h0(HEX0, d_out);
+    seven_seg h2(HEX2, SW[3:0]);
+    seven_seg h4(HEX4, SW[7:4]);
+    seven_seg h5(HEX5, {3'b000, SW[8]});
+
+endmodule // ram_top
 
 
 module seven_seg(seg, bin);
