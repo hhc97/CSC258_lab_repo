@@ -183,7 +183,6 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
 	output reg enable, ld_x, ld_y, ld_c, plot;
 
 	reg [3:0] current_state, next_state;
-	reg c = 1'b0;
 
 	wire [4:0] q;
 	wire clock_1;
