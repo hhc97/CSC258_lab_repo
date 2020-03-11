@@ -1,5 +1,4 @@
 // Part 2 skeleton
-
 module part2
 	(
 		CLOCK_50,						//	On Board 50 MHz
@@ -90,11 +89,12 @@ module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y,
 	
 	wire [1:0] c1, c2, c3;
 	
-	always @ (posedge clock) begin
+	always @ (posedge clock)
+	begin
         if (!reset_n) begin
             x1 <= 8'b0; 
             y1 <= 7'b0;
-				co1 <= 3'b0;
+			co1 <= 3'b0;
         end
         else begin
             if (ld_x)
@@ -108,149 +108,149 @@ module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y,
 	counter m1(clock, reset_n, enable, c1);
 	rate_counter m2(clock, reset_n, enable, c2);
 	assign enable_1 = (c2 ==  2'b00) ? 1 : 0;
-	counter m3(clock,reset_n,enable_1,c3);
+	counter m3(clock, reset_n, enable_1, c3);
 	assign X = x1 + c1;
 	assign Y = y1 + c3;
 	assign Colour = co1;
 endmodule
-	
-	
+
 
 module counter(clock, reset_n, enable, q);
-	input 				clock, reset_n, enable;
-	output reg 	[1:0] 	q;
+	input clock, reset_n, enable;
+	output reg [1:0] q;
 	
-	always @(posedge clock) begin
+	always @(posedge clock)
+	begin
 		if(reset_n == 1'b0)
 			q <= 2'b00;
 		else if (enable == 1'b1)
 		begin
-		  if (q == 2'b11)
-			  q <= 2'b00;
-		  else
-			  q <= q + 1'b1;
+			if (q == 2'b11)
+				q <= 2'b00;
+			else
+				q <= q + 1'b1;
 		end
-   end
+	end
 endmodule
 
+
 module rate_counter(clock, reset_n, enable, q);
-		input clock;
-		input reset_n;
-		input enable;
-		output reg [1:0] q;
-		
-		always @(posedge clock)
-		begin
-			if(reset_n == 1'b0)
-				q <= 2'b11;
-			else if(enable ==1'b1)
-			begin
-			   if ( q == 2'b00 )
-					q <= 2'b11;
-				else
-					q <= q - 1'b1;
-			end
-		end
-endmodule	
+	input clock;
+	input reset_n;
+	input enable;
+	output reg [1:0] q;
 
-module rate_counter1(clock,reset_n,enable,q);
-		input clock;
-		input reset_n;
-		input enable;
-		output reg [4:0] q;
-		
-		always @(posedge clock)
+	always @(posedge clock)
+	begin
+		if(reset_n == 1'b0)
+			q <= 2'b11;
+		else if(enable ==1'b1)
 		begin
-			if(reset_n == 1'b0)
+		if (q == 2'b00)
+			q <= 2'b11;
+		else
+			q <= q - 1'b1;
+		end
+	end
+endmodule
+
+
+module rate_counter1(clock, reset_n, enable, q);
+	input clock;
+	input reset_n;
+	input enable;
+	output reg [4:0] q;
+	
+	always @(posedge clock)
+	begin
+		if(reset_n == 1'b0)
+			q <= 5'b10000;
+		else if(enable ==1'b1)
+		begin
+			if (q == 5'b00000)
 				q <= 5'b10000;
-			else if(enable ==1'b1)
-			begin
-			   if ( q == 5'b00000 )
-					q <= 5'b10000;
-				else
-					q <= q - 1'b1;
-			end
+			else
+				q <= q - 1'b1;
 		end
-endmodule	
+	end
+endmodule
 
 
+module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
+	input go, reset_n, clock, KEY;
+	output reg enable, ld_x, ld_y, ld_c, plot;
 
-module control(go,reset_n,KEY,clock,enable,ld_x,ld_y,ld_c,plot);
-		input go,reset_n,clock,KEY;
-		
-		output reg enable,ld_x,ld_y,ld_c,plot;
-		
-		reg [3:0] current_state, next_state;
-		reg c = 1'b0;
-		
-		wire [4:0] q;
-		wire clock_1;
-		
-		localparam
-		S_LOAD_X      = 4'd0,
-		S_LOAD_X_WAIT = 4'd1,
-		S_LOAD_Y      = 4'd2,
-		S_LOAD_Y_WAIT = 4'd3,
-		S_CYCLE_0     = 4'd4;
-					 
-		rate_counter1 m1(clock,reset_n,1'b1,q);
-		assign clock_1 = (q == 5'b00000) ? 1 : 0;
-		
-		always@(*)
-      begin: state_table 
+	reg [3:0] current_state, next_state;
+	reg c = 1'b0;
+
+	wire [4:0] q;
+	wire clock_1;
+
+	localparam
+	S_LOAD_X      = 4'd0,
+	S_LOAD_X_WAIT = 4'd1,
+	S_LOAD_Y      = 4'd2,
+	S_LOAD_Y_WAIT = 4'd3,
+	S_CYCLE_0     = 4'd4;
+
+	rate_counter1 m1(clock,reset_n,1'b1,q);
+	assign clock_1 = (q == 5'b00000) ? 1 : 0;
+	
+	always@(*)
+    begin: state_table
         case (current_state)
-            S_LOAD_X:      next_state = go ? S_LOAD_X_WAIT : S_LOAD_X; 
-            S_LOAD_X_WAIT: next_state = go ? S_LOAD_X_WAIT : S_LOAD_Y; 
-            S_LOAD_Y:      next_state = KEY ? S_LOAD_Y_WAIT : S_LOAD_Y; 
-            S_LOAD_Y_WAIT: next_state = KEY ? S_LOAD_Y_WAIT : S_CYCLE_0; 
+            S_LOAD_X:      next_state = go ? S_LOAD_X_WAIT : S_LOAD_X;
+            S_LOAD_X_WAIT: next_state = go ? S_LOAD_X_WAIT : S_LOAD_Y;
+            S_LOAD_Y:      next_state = KEY ? S_LOAD_Y_WAIT : S_LOAD_Y;
+            S_LOAD_Y_WAIT: next_state = KEY ? S_LOAD_Y_WAIT : S_CYCLE_0;
             S_CYCLE_0:     next_state = S_LOAD_X;
             default:       next_state = S_LOAD_X;
         endcase
-      end 
+    end
 		
-		always@(*)
-      begin: enable_signals
-        // By default make all our signals 0
+	always@(*)
+    begin: enable_signals
+        // default signals are 0
         ld_x = 1'b0;
         ld_y = 1'b0;
         ld_c = 1'b0;
-		  enable = 1'b0;
-		  plot = 1'b0;
-		  
-		  case(current_state)
-				S_LOAD_X:begin
-					ld_x = 1'b1;
-					end
-				S_LOAD_Y:begin
-					ld_y = 1'b1;
-					end
-				S_CYCLE_0:begin
-					ld_c = 1'b1;
-					enable = 1'b1;
-					plot = 1'b1;
-					end
-		  endcase
-		end
-		
-		
-		always@(posedge clock_1)
-      begin: state_FFs
+		enable = 1'b0;
+		plot = 1'b0;
+
+		case(current_state)
+			S_LOAD_X:begin
+				ld_x = 1'b1;
+				end
+			S_LOAD_Y:begin
+				ld_y = 1'b1;
+				end
+			S_CYCLE_0:begin
+				ld_c = 1'b1;
+				enable = 1'b1;
+				plot = 1'b1;
+				end
+		endcase
+	end
+
+	always@(posedge clock_1)
+	begin: state_FFs
         if(!reset_n)
-            current_state <= S_LOAD_X;
+			current_state <= S_LOAD_X;
         else
-            current_state <= next_state;
-      end 
+			current_state <= next_state;
+	end
 endmodule
 
-module combination(data_in,colour,reset_n,clock,go,KEY,X,Y,Colour);
-		input [6:0] data_in;
-		input [2:0] colour;
-		input reset_n,clock,go,KEY;
-		output[6:0] X,Y;
-		output[2:0] Colour;
-		
-		wire enable,ld_x,ld_y,ld_c,plot;
-		
-		control m1(go,reset_n,KEY,clock,enable,ld_x,ld_y,ld_c,plot);
-		datapath m2(data_in,colour,clock,reset_n,enable,ld_x,ld_y,ld_c,X,Y,Colour);
+
+module combination(data_in, colour, reset_n, clock, go, KEY, X, Y, Colour);
+	input [6:0] data_in;
+	input [2:0] colour;
+	input reset_n,clock,go,KEY;
+	output[6:0] X,Y;
+	output[2:0] Colour;
+	
+	wire enable,ld_x,ld_y,ld_c,plot;
+	
+	control m1(go,reset_n,KEY,clock,enable,ld_x,ld_y,ld_c,plot);
+	datapath m2(data_in,colour,clock,reset_n,enable,ld_x,ld_y,ld_c,X,Y,Colour);
 endmodule
