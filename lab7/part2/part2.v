@@ -3,8 +3,8 @@ module part2
 	(
 		CLOCK_50,						//	On Board 50 MHz
 		// Your inputs and outputs here
-        KEY,
-        SW,
+		KEY,
+		SW,
 		// The ports below are for the VGA output.  Do not change.
 		VGA_CLK,   						//	VGA Clock
 		VGA_HS,							//	VGA H_SYNC
@@ -66,13 +66,13 @@ module part2
 			
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
-    
-    // Instansiate datapath
+	
+	// Instansiate datapath
 	// datapath d0(...);
 	datapath d0(SW[6:0], SW[9:7], CLOCK_50, KEY[0], enable, ld_x, ld_y, ld_c, x, y, colour);
 
-    // Instansiate FSM control
-    // control c0(...);
+	// Instansiate FSM control
+	// control c0(...);
 	 control c0(~KEY[3], KEY[0], ~KEY[1], CLOCK_50, enable, ld_x, ld_y, ld_c, writeEn);
 
 endmodule
@@ -91,20 +91,20 @@ module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y,
 	
 	always @ (posedge clock)
 	begin
-        if (!reset_n) begin
-            x1 <= 8'b0; 
-            y1 <= 7'b0;
-			co1 <= 3'b0;
-        end
-        else begin
-            if (ld_x)
-                x1 <= {1'b0, data_in};
-            if (ld_y)
-                y1 <= data_in;
-				if (ld_c)
-					 co1 <= colour;
-        end
-    end
+		if (!reset_n) begin
+		x1 <= 8'b0; 
+		y1 <= 7'b0;
+		co1 <= 3'b0;
+		end
+		else begin
+		if (ld_x)
+			x1 <= {1'b0, data_in};
+		if (ld_y)
+			y1 <= data_in;
+		if (ld_c)
+			co1 <= colour;
+		end
+	end
 	counter m1(clock, reset_n, enable, c1);
 	rate_counter m2(clock, reset_n, enable, c2);
 	assign enable_1 = (c2 ==  2'b00) ? 1 : 0;
@@ -187,33 +187,33 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
 	wire clock_1;
 
 	localparam
-	S_LOAD_X      = 4'd0,
+	S_LOAD_X	  = 4'd0,
 	S_LOAD_X_WAIT = 4'd1,
-	S_LOAD_Y      = 4'd2,
+	S_LOAD_Y	  = 4'd2,
 	S_LOAD_Y_WAIT = 4'd3,
-	S_CYCLE_0     = 4'd4;
+	S_CYCLE_0	 = 4'd4;
 
 	rate_counter1 m1(clock,reset_n,1'b1,q);
 	assign clock_1 = (q == 5'b00000) ? 1 : 0;
 	
 	always@(*)
-    begin: state_table
-        case (current_state)
-            S_LOAD_X:      next_state = go ? S_LOAD_X_WAIT : S_LOAD_X;
-            S_LOAD_X_WAIT: next_state = go ? S_LOAD_X_WAIT : S_LOAD_Y;
-            S_LOAD_Y:      next_state = KEY ? S_LOAD_Y_WAIT : S_LOAD_Y;
-            S_LOAD_Y_WAIT: next_state = KEY ? S_LOAD_Y_WAIT : S_CYCLE_0;
-            S_CYCLE_0:     next_state = S_LOAD_X;
-            default:       next_state = S_LOAD_X;
-        endcase
-    end
+	begin: state_table
+		case (current_state)
+			S_LOAD_X:	  next_state = go ? S_LOAD_X_WAIT : S_LOAD_X;
+			S_LOAD_X_WAIT: next_state = go ? S_LOAD_X_WAIT : S_LOAD_Y;
+			S_LOAD_Y:	  next_state = KEY ? S_LOAD_Y_WAIT : S_LOAD_Y;
+			S_LOAD_Y_WAIT: next_state = KEY ? S_LOAD_Y_WAIT : S_CYCLE_0;
+			S_CYCLE_0:	 next_state = S_LOAD_X;
+			default:	   next_state = S_LOAD_X;
+		endcase
+	end
 		
 	always@(*)
-    begin: enable_signals
-        // default signals are 0
-        ld_x = 1'b0;
-        ld_y = 1'b0;
-        ld_c = 1'b0;
+	begin: enable_signals
+		// default signals are 0
+		ld_x = 1'b0;
+		ld_y = 1'b0;
+		ld_c = 1'b0;
 		enable = 1'b0;
 		plot = 1'b0;
 
@@ -234,9 +234,9 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
 
 	always@(posedge clock_1)
 	begin: state_FFs
-        if(!reset_n)
+		if(!reset_n)
 			current_state <= S_LOAD_X;
-        else
+		else
 			current_state <= next_state;
 	end
 endmodule
