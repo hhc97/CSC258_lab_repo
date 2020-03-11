@@ -245,12 +245,12 @@ endmodule
 module combination(data_in, colour, reset_n, clock, go, KEY, X, Y, Colour);
 	input [6:0] data_in;
 	input [2:0] colour;
-	input reset_n,clock,go,KEY;
-	output[6:0] X,Y;
+	input reset_n, clock, go, KEY;
+	output[6:0] X, Y;
 	output[2:0] Colour;
 	
-	wire enable,ld_x,ld_y,ld_c,plot;
+	wire enable, ld_x, ld_y, ld_c, plot;
 	
-	control m1(go,reset_n,KEY,clock,enable,ld_x,ld_y,ld_c,plot);
-	datapath m2(data_in,colour,clock,reset_n,enable,ld_x,ld_y,ld_c,X,Y,Colour);
+	control m1(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
+	datapath m2(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y, Colour);
 endmodule
