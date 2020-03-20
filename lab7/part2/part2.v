@@ -1,7 +1,7 @@
 // Part 2 skeleton
 module part2
     (
-        CLOCK_50,                        //    On Board 50 MHz
+        CLOCK_50,                          //    On Board 50 MHz
         // Your inputs and outputs here
         KEY,
         SW,
@@ -9,14 +9,14 @@ module part2
         VGA_CLK,                           //    VGA Clock
         VGA_HS,                            //    VGA H_SYNC
         VGA_VS,                            //    VGA V_SYNC
-        VGA_BLANK_N,                        //    VGA BLANK
+        VGA_BLANK_N,                       //    VGA BLANK
         VGA_SYNC_N,                        //    VGA SYNC
-        VGA_R,                           //    VGA Red[9:0]
+        VGA_R,                             //    VGA Red[9:0]
         VGA_G,                             //    VGA Green[9:0]
-        VGA_B                           //    VGA Blue[9:0]
+        VGA_B                              //    VGA Blue[9:0]
     );
 
-    input            CLOCK_50;                //    50 MHz
+    input            CLOCK_50;             //    50 MHz
     input   [9:0]   SW;
     input   [3:0]   KEY;
 
@@ -25,11 +25,11 @@ module part2
     output            VGA_CLK;                   //    VGA Clock
     output            VGA_HS;                    //    VGA H_SYNC
     output            VGA_VS;                    //    VGA V_SYNC
-    output            VGA_BLANK_N;                //    VGA BLANK
+    output            VGA_BLANK_N;               //    VGA BLANK
     output            VGA_SYNC_N;                //    VGA SYNC
-    output    [9:0]    VGA_R;                   //    VGA Red[9:0]
-    output    [9:0]    VGA_G;                     //    VGA Green[9:0]
-    output    [9:0]    VGA_B;                   //    VGA Blue[9:0]
+    output    [9:0]    VGA_R;                    //    VGA Red[9:0]
+    output    [9:0]    VGA_G;                    //    VGA Green[9:0]
+    output    [9:0]    VGA_B;                    //    VGA Blue[9:0]
     
     wire resetn;
     assign resetn = KEY[0];
