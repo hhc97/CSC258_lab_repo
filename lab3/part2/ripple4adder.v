@@ -38,12 +38,12 @@ endmodule
 
 
 module fulladder(A, B, cin, cout, S);
-	input A;
-	input B;
-	input cin;
-	output cout;
-	output S;
-	
-	assign S = cin ^ (A ^ B);
-	assign cout = A & B | A & cin | B & cin;
+    input A;
+    input B;
+    input cin;
+    output cout;
+    output S;
+    
+    assign S = cin ^ (A ^ B);
+    assign cout = A & B | A & cin | B & cin;
 endmodule
