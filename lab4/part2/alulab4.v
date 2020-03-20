@@ -1,13 +1,13 @@
 module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
-	input [9:0] SW; // reset_n -> SW[9], ALU_function -> SW[7:5], data A -> SW[3:0]
-	input [0:0] KEY; // clk -> KEY[0]
-	output [7:0] LEDR; // for ALUout
-	output [0:6] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
+    input [9:0] SW; // reset_n -> SW[9], ALU_function -> SW[7:5], data A -> SW[3:0]
+    input [0:0] KEY; // clk -> KEY[0]
+    output [7:0] LEDR; // for ALUout
+    output [0:6] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
     wire [4:0] f0;
     wire [4:0] f1;
     wire [7:0] reg_out;
-	
-	reg [7:0] ALUout;
+    
+    reg [7:0] ALUout;
 
     assign HEX1 = 7'b1111111;
     assign HEX2 = 7'b1111111;
@@ -34,21 +34,21 @@ module alu(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
     );
 
     always @(*)
-	begin
-		case(SW[7:5])
-			0: ALUout = {3'b000, f0}; // output is A + 1 from wire f0
-			1: ALUout = {3'b000, f1}; // output is A + B from wire f1
-			2: ALUout = SW[3:0] + reg_out[3:0]; // output is A + B using verilog '+' operator
-			3: ALUout = {SW[3:0] | reg_out[3:0], SW[3:0] ^ reg_out[3:0]}; // A OR B, A XOR B
-			4: ALUout = {7'b0000000, reg_out[3] | reg_out[2] | reg_out[1] | reg_out[0] | SW[3] | SW[2] | SW[1] | SW[0]};
-			5: ALUout = reg_out[3:0] << SW[3:0]; // left shift B by A bits
+    begin
+        case(SW[7:5])
+            0: ALUout = {3'b000, f0}; // output is A + 1 from wire f0
+            1: ALUout = {3'b000, f1}; // output is A + B from wire f1
+            2: ALUout = SW[3:0] + reg_out[3:0]; // output is A + B using verilog '+' operator
+            3: ALUout = {SW[3:0] | reg_out[3:0], SW[3:0] ^ reg_out[3:0]}; // A OR B, A XOR B
+            4: ALUout = {7'b0000000, reg_out[3] | reg_out[2] | reg_out[1] | reg_out[0] | SW[3] | SW[2] | SW[1] | SW[0]};
+            5: ALUout = reg_out[3:0] << SW[3:0]; // left shift B by A bits
             6: ALUout = reg_out[3:0] >> SW[3:0]; // right shift B by A bits
             7: ALUout = SW[3:0] * reg_out[3:0]; // A x B using verilog '*' operator
-			default: ALUout = 8'b00000000;
-		endcase
-	end
-	
-	assign LEDR = reg_out;
+            default: ALUout = 8'b00000000;
+        endcase
+    end
+    
+    assign LEDR = reg_out;
 
 // display value of A on hex0
     seven_seg h0(
@@ -73,18 +73,18 @@ endmodule
 // an eight bit register, q will be set to d on posedge of clock if reset_n is low
 // else, q will be set to 0
 module eight_bit_register(d, clk, reset_n, q);
-	input [7:0] d;
-	input clk, reset_n;
-	output [7:0] q;
-	reg [7:0] q;
+    input [7:0] d;
+    input clk, reset_n;
+    output [7:0] q;
+    reg [7:0] q;
 
-	always @(posedge clk)
-	begin
-		if (reset_n == 1'b0)
-			q <= 0;
-		else
-			q <= d;
-	end
+    always @(posedge clk)
+    begin
+        if (reset_n == 1'b0)
+            q <= 0;
+        else
+            q <= d;
+    end
 endmodule
 
 
@@ -158,12 +158,12 @@ endmodule
 
 
 module fulladder(A, B, cin, cout, S);
-	input A;
-	input B;
-	input cin;
-	output cout;
-	output S;
-	
-	assign S = cin ^ (A ^ B);
-	assign cout = A & B | A & cin | B & cin;
+    input A;
+    input B;
+    input cin;
+    output cout;
+    output S;
+    
+    assign S = cin ^ (A ^ B);
+    assign cout = A & B | A & cin | B & cin;
 endmodule
