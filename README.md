@@ -8,3 +8,6 @@ Hence, I've decided to make this repo public, not for you to cheat off, but for 
 If you end up using this resource for your labs, do drop me an email at hc.hu@utoronto.ca, I'd like to know that this has helped someone out :)
 
 All the best with this insufferable course...
+
+Note:
+The code for all 7 labs in this repo has been tested and verified to be correct, according to the specification of the Winter 2020 offering. Minor changes are made to the lab handouts each offering, but they are trivial and often only require changes to a couple lines of code.
