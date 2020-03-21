@@ -73,7 +73,7 @@ module part2
 
     // Instansiate FSM control
     // control c0(...);
-     control c0(~KEY[3], KEY[0], ~KEY[1], CLOCK_50, enable, ld_x, ld_y, ld_c, writeEn);
+    control c0(~KEY[3], KEY[0], ~KEY[1], CLOCK_50, enable, ld_x, ld_y, ld_c, writeEn);
 
 endmodule
 
@@ -208,7 +208,7 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
             default: next_state = S_LOAD_X;
         endcase
     end
-        
+	
     always@(*)
     begin: enable_signals
         // default signals are 0
