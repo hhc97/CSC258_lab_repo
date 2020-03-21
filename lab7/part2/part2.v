@@ -91,7 +91,7 @@ module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y,
     
     wire [1:0] c1, c2, c3;
     
-    always @ (posedge clock)
+    always @(posedge clock)
     begin
         if (!reset_n) begin
             x1 <= 8'b0; 
@@ -108,17 +108,17 @@ module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y,
         end
     end
 
-    counter m1(clock, reset_n, enable, c1);
-    rate_counter m2(clock, reset_n, enable, c2);
-    assign enable_1 = (c2 ==  2'b00) ? 1 : 0;
-    counter m3(clock, reset_n, enable_1, c3);
+    count_up4 m1(clock, reset_n, enable, c1);
+    count_up4 m2(clock, reset_n, enable, c2);
+    assign enable_1 = (c2 == 2'b11) ? 1 : 0;
+    count_up4 m3(clock, reset_n, enable_1, c3);
     assign X = x1 + c1;
     assign Y = y1 + c3;
     assign Colour = co1;
 endmodule
 
-
-module counter(clock, reset_n, enable, q);
+// counter from 00 to 11 on posedge clock
+module count_up4(clock, reset_n, enable, q);
     input clock, reset_n, enable;
     output reg [1:0] q;
     
@@ -137,38 +137,15 @@ module counter(clock, reset_n, enable, q);
 endmodule
 
 
-module rate_counter(clock, reset_n, enable, q);
-    input clock;
-    input reset_n;
-    input enable;
-    output reg [1:0] q;
-
-    always @(posedge clock)
-    begin
-        if(reset_n == 1'b0)
-            q <= 2'b11;
-        else if(enable ==1'b1)
-        begin
-        if (q == 2'b00)
-            q <= 2'b11;
-        else
-            q <= q - 1'b1;
-        end
-    end
-endmodule
-
-
-module rate_counter1(clock, reset_n, enable, q);
-    input clock;
-    input reset_n;
-    input enable;
+module rate_counter16(clock, reset_n, enable, q);
+    input clock, reset_n, enable;
     output reg [4:0] q;
     
     always @(posedge clock)
     begin
         if(reset_n == 1'b0)
             q <= 5'b10000;
-        else if(enable ==1'b1)
+        else if(enable == 1'b1)
         begin
             if (q == 5'b00000)
                 q <= 5'b10000;
@@ -195,10 +172,10 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
     S_LOAD_Y_WAIT = 4'd3,
     S_CYCLE_0 = 4'd4;
 
-    rate_counter1 m1(clock, reset_n, 1'b1, q);
+    rate_counter16 m1(clock, reset_n, 1'b1, q);
     assign clock_1 = (q == 5'b00000) ? 1 : 0;
     
-    always@(*)
+    always @(*)
     begin: state_table
         case (current_state)
             S_LOAD_X: next_state = go ? S_LOAD_X_WAIT : S_LOAD_X;
@@ -210,7 +187,7 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
         endcase
     end
 	
-    always@(*)
+    always @(*)
     begin: enable_signals
         // default signals are 0
         ld_x = 1'b0;
@@ -219,7 +196,7 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
         enable = 1'b0;
         plot = 1'b0;
 
-        case(current_state)
+        case (current_state)
             S_LOAD_X:begin
                 ld_x = 1'b1;
                 end
@@ -234,9 +211,9 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
         endcase
     end
 
-    always@(posedge clock_1)
+    always @(posedge clock_1)
     begin: state_FFs
-        if(!reset_n)
+        if (!reset_n)
             current_state <= S_LOAD_X;
         else
             current_state <= next_state;
@@ -250,7 +227,7 @@ module combination(data_in, colour, reset_n, clock, go, KEY, X, Y, Colour);
     input reset_n, clock, go, KEY;
     output [7:0] X;
     output [6:0] Y;
-    output[2:0] Colour;
+    output [2:0] Colour;
     
     wire enable, ld_x, ld_y, ld_c, plot;
     
