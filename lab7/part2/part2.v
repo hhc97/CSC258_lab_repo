@@ -16,17 +16,17 @@ module part2
         VGA_B                              //    VGA Blue[9:0]
     );
 
-    input            CLOCK_50;             //    50 MHz
+    input           CLOCK_50;              //    50 MHz
     input   [9:0]   SW;
     input   [3:0]   KEY;
 
     // Declare your inputs and outputs here
     // Do not change the following outputs
-    output            VGA_CLK;                   //    VGA Clock
-    output            VGA_HS;                    //    VGA H_SYNC
-    output            VGA_VS;                    //    VGA V_SYNC
-    output            VGA_BLANK_N;               //    VGA BLANK
-    output            VGA_SYNC_N;                //    VGA SYNC
+    output             VGA_CLK;                  //    VGA Clock
+    output             VGA_HS;                   //    VGA H_SYNC
+    output             VGA_VS;                   //    VGA V_SYNC
+    output             VGA_BLANK_N;              //    VGA BLANK
+    output             VGA_SYNC_N;               //    VGA SYNC
     output    [9:0]    VGA_R;                    //    VGA Red[9:0]
     output    [9:0]    VGA_G;                    //    VGA Green[9:0]
     output    [9:0]    VGA_B;                    //    VGA Blue[9:0]
@@ -107,6 +107,7 @@ module datapath(data_in, colour, clock, reset_n, enable, ld_x, ld_y, ld_c, X, Y,
             co1 <= colour;
         end
     end
+
     counter m1(clock, reset_n, enable, c1);
     rate_counter m2(clock, reset_n, enable, c2);
     assign enable_1 = (c2 ==  2'b00) ? 1 : 0;
