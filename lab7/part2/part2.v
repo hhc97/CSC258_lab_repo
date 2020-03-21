@@ -124,7 +124,7 @@ module count_up4(clock, reset_n, enable, q);
     
     always @(posedge clock)
     begin
-        if(reset_n == 1'b0)
+        if (reset_n == 1'b0)
             q <= 2'b00;
         else if (enable == 1'b1)
         begin
@@ -143,9 +143,9 @@ module rate_counter16(clock, reset_n, enable, q);
     
     always @(posedge clock)
     begin
-        if(reset_n == 1'b0)
+        if (reset_n == 1'b0)
             q <= 5'b10000;
-        else if(enable == 1'b1)
+        else if (enable == 1'b1)
         begin
             if (q == 5'b00000)
                 q <= 5'b10000;
