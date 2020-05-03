@@ -1,7 +1,7 @@
 # CSC258_lab_repo
 This repo contains all the lab work that I've done for CSC258H1 taken Winter 2020 at UofT St. George.
 
-This course had an extremely heavy workload, and the labs were absolute Hell.
+This course had an extremely heavy workload, and the labs were absolute Hell.  
 (I've heard inviting your lab TA out for drinks will help ;)
 
 I've decided to make this repo public, not for you to cheat off, but for future students to have a reference when doing the labs, because nobody should have to go through this course without any guidance, especially for the labs.
