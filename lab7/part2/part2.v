@@ -63,7 +63,7 @@ module part2
         defparam VGA.MONOCHROME = "FALSE";
         defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;
         defparam VGA.BACKGROUND_IMAGE = "black.mif";
-            
+
     // Put your code here. Your code should produce signals x,y,colour and writeEn/plot
     // for the VGA controller, in addition to any other functionality your design may require.
     
@@ -186,7 +186,7 @@ module control(go, reset_n, KEY, clock, enable, ld_x, ld_y, ld_c, plot);
             default: next_state = S_LOAD_X;
         endcase
     end
-	
+
     always @(*)
     begin: enable_signals
         // default signals are 0
