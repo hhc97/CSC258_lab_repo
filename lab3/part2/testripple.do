@@ -47,7 +47,7 @@ run 10ns
 
 # a = 3 (0011); b = 12 (1100);
 # add 1 from carry in
-# output = 16 (11111)
+# output = 16 (10000)
 force {SW[8]} 1
 force {SW[7]} 1
 force {SW[6]} 1
